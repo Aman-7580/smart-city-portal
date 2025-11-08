@@ -17,20 +17,20 @@ import { motion } from "framer-motion";
 function App() {
   const [analyticsData, setAnalyticsData] = useState(null);
 
-  // ✅ Fetch live data from Flask backend
+  // ✅ Fetch data from live Flask backend hosted on Render
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://127.0.0.1:5000/api/analytics")
+      fetch("https://smart-city-portal-um0k.onrender.com/api/analytics")
         .then((res) => res.json())
         .then((data) => setAnalyticsData(data))
         .catch((err) => console.error("Error fetching analytics data:", err));
     };
     fetchData();
-    const interval = setInterval(fetchData, 5000); // auto refresh every 5s
+    const interval = setInterval(fetchData, 5000); // auto-refresh every 5 seconds
     return () => clearInterval(interval);
   }, []);
 
-  // 🔄 Loading UI
+  // 🔄 Show loading while fetching data
   if (!analyticsData) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50 text-gray-700">
@@ -58,7 +58,7 @@ function App() {
         </p>
       </section>
 
-      {/* 🔹 Smart City Projects */}
+      {/* 🔹 Projects Section */}
       <section
         id="projects"
         className="px-6 md:px-12 py-8 max-w-6xl mx-auto bg-white shadow-md rounded-lg"
@@ -87,7 +87,7 @@ function App() {
         </div>
       </section>
 
-      {/* 🔹 Dashboard */}
+      {/* 🔹 Dashboard Section */}
       <section
         id="dashboard"
         className="bg-gray-50 py-12 px-6 md:px-12 border-t border-gray-300"
@@ -121,7 +121,7 @@ function App() {
         </div>
       </section>
 
-      {/* 🔹 Analytics */}
+      {/* 🔹 Analytics Section */}
       <section
         id="analytics"
         className="bg-white py-16 px-6 md:px-12 border-t border-gray-200"
@@ -200,23 +200,18 @@ const Header = () => (
 
     <nav className="bg-blue-900 text-white sticky top-0 z-50 shadow-md">
       <ul className="flex flex-wrap justify-center gap-5 py-3 text-sm md:text-base font-medium">
-        {[
-          "Home",
-          "Projects",
-          "Dashboard",
-          "Analytics",
-          "Government",
-          "Contact",
-        ].map((item) => (
-          <li key={item}>
-            <a
-              href={`#${item.toLowerCase()}`}
-              className="hover:text-yellow-300 transition"
-            >
-              {item}
-            </a>
-          </li>
-        ))}
+        {["Home", "Projects", "Dashboard", "Analytics", "Government", "Contact"].map(
+          (item) => (
+            <li key={item}>
+              <a
+                href={`#${item.toLowerCase()}`}
+                className="hover:text-yellow-300 transition"
+              >
+                {item}
+              </a>
+            </li>
+          )
+        )}
       </ul>
     </nav>
   </header>
